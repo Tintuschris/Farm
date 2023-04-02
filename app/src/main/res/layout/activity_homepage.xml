@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp"
+    android:fontFamily="@fonts/Poppins">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/current_location_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            android:text="Current location:"/>
+
+        <TextView
+            android:id="@+id/nearest_town_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:background="@drawable/button_background"
+            android:text="Nearest town:"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/bulkDensityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bulk Density: " />
+
+    <TextView
+        android:id="@+id/cationExchangeCapacityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cation Exchange Capacity: " />
+
+    <TextView
+        android:id="@+id/availableWaterCapacityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Available Water Capacity: " />
+
+    <TextView
+        android:id="@+id/clayContentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clay Content: " />
+
+    <TextView
+        android:id="@+id/nitrogenContentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nitrogen Content: " />
+
+    <TextView
+        android:id="@+id/organicCarbonDensityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Organic Carbon Density: " />
+
+    <TextView
+        android:id="@+id/organicCarbonStockTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Organic Carbon Stock: " />
+
+    <TextView
+        android:id="@+id/pHTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pH: " />
+
+    <TextView
+        android:id="@+id/siltContentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Silt Content: " />
+
+    <TextView
+        android:id="@+id/soilOrganicCarbonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Soil Organic Carbon: " />
+
+</LinearLayout>
