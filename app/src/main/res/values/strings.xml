@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Farm</string>
+    <string name="launch_login">Launch Login</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="launch_signup">Sign Up</string>
+</resources>
