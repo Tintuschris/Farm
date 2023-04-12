@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="my_array">
+        <item>Nyanza</item>
+        <item>Western</item>
+        <item>Rift Valley</item>
+        <item>Coast</item>
+        <item>Central</item>
+        <item>Eastern</item>
+        <item>North Eastern</item>
+        <item>Nairobi</item>
+    </string-array>
+
+</resources>

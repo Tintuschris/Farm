@@ -45,7 +45,17 @@
         <activity
             android:name=".HomePageActivity"
             android:label=""
-            android:theme="@style/Theme.Farm">
+            android:theme="@style/Theme.Farm.NoActionBar">
+        </activity>
+        <activity
+            android:name=".TreesActivity"
+            android:label=""
+            android:theme="@style/Theme.Farm.NoActionBar">
+        </activity>
+        <activity
+            android:name=".RegionsActivity"
+            android:label=""
+            android:theme="@style/Theme.Farm.NoActionBar">
         </activity>
     </application>
 

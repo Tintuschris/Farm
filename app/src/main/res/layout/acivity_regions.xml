@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/main_color"
+        android:layout_marginBottom="10dp"
+        android:elevation="4dp"
+        app:popupTheme="@style/Theme.Farm"
+        app:menu="@menu/menu_sec">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FARM"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:gravity="left"/>
+    </androidx.appcompat.widget.Toolbar>
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        android:layout_marginTop="10dp"
+        android:padding="8dp"
+        android:textColor="@color/text_color"
+        android:gravity="center_horizontal"
+        android:entries="@array/my_array" />
+    <TextView
+        android:id="@+id/soil_properties_view"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color"
+        android:layout_margin="4dp"
+        android:background="@drawable/properties_bg"
+        android:padding="8dp"
+        android:text="Soil Properties: " />
+</LinearLayout>

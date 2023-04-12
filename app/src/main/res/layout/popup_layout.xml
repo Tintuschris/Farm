@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color"
+    android:layout_gravity="center_vertical"
+    android:fontFamily="@fonts/Poppins">
+    <ImageView
+        android:id="@+id/link_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@drawable/close_b" />
+    <TextView
+        android:id="@+id/soil_properties_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color"
+        android:background="@drawable/popup_bg"
+        android:padding="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:autoLink="web" />
+</LinearLayout>
+

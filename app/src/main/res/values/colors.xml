@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="neon_green">#78ff6e</color>
     <color name="main_color">#66FF66</color>
+    <color name="sec_color">#B6FAB6</color>
+    <color name="text_color">#007A00</color>
+    <color name="my_color">#80B6FAB6</color>
+    <color name="my_sec_color">#B6FAB6</color>
+
 </resources>
