@@ -5,6 +5,21 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="launch_signup">Sign Up</string>
+    <!-- Welcome Screen Strings -->
+    <string name="welcome_text">WELCOME!</string>
+    <string name="sign_up_text">Please sign up here</string>
+    <string name="login_prompt_text">Already signed up? Log in here</string>
+    <!-- Button Texts -->
+    <string name="sign_up_button">Sign Up</string>
+    <string name="login_button">Log In</string>
     <string name="agroforestry_benefits">Agroforestry can improve soil fertility, reduce soil erosion, increase water infiltration, enhance biodiversity, and reduce pest pressure, all of which can help to tackle yield gaps in agricultural systems.</string>
-
+    <string name="default_web_client_id">997233060759-qe7710f2934bj2rnt3qpb61boh7t18nm.apps.googleusercontent.com</string>
+    <string name="enter_email">Enter email address!</string>
+    <string name="invalid_email">Invalid email format!</string>
+    <string name="enter_password">Enter password!</string>
+    <string name="invalid_password">Password must contain at least 1 uppercase, 1 lowercase, 1 number, and 1 special character!</string>
+    <string name="registration_successful">Registration successful!</string>
+    <string name="registration_failed">Registration failed!</string>
+    <string name="login_successful">Login successful!</string>
+    <string name="login_failed">Login failed! Please check your credentials and try again.</string>
 </resources>
