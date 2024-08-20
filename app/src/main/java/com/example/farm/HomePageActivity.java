@@ -86,7 +86,7 @@ public class HomePageActivity extends AppCompatActivity {
         currentLocationTextView = findViewById(R.id.current_location_text_view);
         nearestTownTextView = findViewById(R.id.nearest_town_text_view);
         bulkDensityTextView = findViewById(R.id.bulkDensityTextView);
-        soil_properties_view = findViewById(R.id.soil_properties_view);
+//        soil_properties_view = findViewById(R.id.soil_properties_view);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         popupView = inflater.inflate(R.layout.popup_layout, null);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,35 +48,33 @@ public class LoginActivity extends AppCompatActivity {
                 String email = mUsernameEditText.getText().toString().trim();
                 String password = mPasswordEditText.getText().toString().trim();
 
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                if (!validateEmail(email) || !validatePassword(password)) {
                     return;
                 }
 
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_SHORT).show();
-                                    // Set loggedIn to true in SharedPreferences
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putBoolean(LOGGED_IN, true);
-                                    editor.apply();
-                                    // Start HomePageActivity
-                                    Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                // Move Firebase login to a background thread
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAuth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            runOnUiThread(() -> {
+                                                Toast.makeText(getApplicationContext(), R.string.login_successful, Toast.LENGTH_SHORT).show();
+                                                setLoggedInStatus(true);
+                                                navigateToHomePage();
+                                            });
+                                        } else {
+                                            String errorMessage = task.getException() != null ?
+                                                    task.getException().getMessage() : getString(R.string.login_failed);
+                                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show());
+                                        }
+                                    }
+                                });
+                    }
+                }).start();
             }
         });
     }
@@ -85,29 +84,68 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is already logged in
         boolean loggedIn = sharedPreferences.getBoolean(LOGGED_IN, false);
-        if (loggedIn) {
-            // Start HomePageActivity
-            Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-            startActivity(intent);
-            finish();
+        if (loggedIn && FirebaseAuth.getInstance().getCurrentUser() != null) {
+            navigateToHomePage();
         }
     }
+    // Method to validate email format
+    private boolean validateEmail(String email) {
+        if (TextUtils.isEmpty(email)) {
+            showToast(R.string.enter_email);
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            showToast(R.string.invalid_email);
+            return false;
+        }
+        return true;
+    }
 
+    // Method to validate password
+    private boolean validatePassword(String password) {
+        if (TextUtils.isEmpty(password)) {
+            showToast(R.string.enter_password);
+            return false;
+        }
+        return true;
+    }
+
+    // Navigate to HomePageActivity
+    private void navigateToHomePage() {
+        Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    // Set the login status in SharedPreferences
+    private void setLoggedInStatus(boolean status) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(LOGGED_IN, status);
+        editor.apply();
+    }
+
+    // Helper method to show toast messages
+    private void showToast(int messageId) {
+        runOnUiThread(() -> Toast.makeText(getApplicationContext(), messageId, Toast.LENGTH_SHORT).show());
+    }
+
+    // Logout method for SharedPreferences
     public static void logout(SharedPreferences sharedPreferences, Activity activity) {
+        // Sign out from Firebase
+        FirebaseAuth.getInstance().signOut();
+
+        // Clear SharedPreferences
         if (sharedPreferences != null) {
-            // Set loggedIn to false in SharedPreferences
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(LOGGED_IN, false);
             editor.apply();
         }
-        // Start LoginActivity
+
+        // Navigate back to MainActivity
         if (activity != null) {
             Intent intent = new Intent(activity, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             activity.startActivity(intent);
             activity.finish();
         }
     }
-
-
-
 }
