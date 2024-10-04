@@ -15,4 +15,9 @@
         <item name="android:typeface">monospace</item>
         <item name="android:fontFamily">@fonts/Poppins-Regular</item>
     </style>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Farm" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
 </resources>

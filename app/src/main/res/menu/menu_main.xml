@@ -1,6 +1,11 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/action_weather_forecast"
+        android:icon="@drawable/ic_weather"
+        android:title="Weather Forecast"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_regions"
         android:icon="@drawable/ic_regions"
         android:title="Regions"
