@@ -1,16 +1,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/main_color"
+        android:layout_marginBottom="10dp"
+        android:elevation="4dp"
+        app:popupTheme="@style/Theme.Farm"
+        app:menu="@menu/menu_sec">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FARM"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:gravity="left"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Header TextView -->
     <TextView
-        android:id="@+id/forecast_text_view"
+        android:id="@+id/forecast_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Forecast data will appear here"
-        android:textSize="16sp"
+        android:text="Dear farmer, here is your 3-Hour Interval Forecasts for the next 5 days:"
+        android:textSize="20sp"
         android:padding="16dp"
-        android:textColor="@color/text_color" />
+        android:textColor="@color/text_color"
+        android:textStyle="bold"
+        android:gravity="left" />
+
+    <!-- ScrollView for scrollable forecast data -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Forecast content inside ScrollView -->
+        <TextView
+            android:id="@+id/forecast_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Forecast data will appear here\nLine 1\nLine 2\nLine 3\nLine 4\nLine 5\nLine 6\nLine 7\nLine 8\nLine 9\nLine 10\nLine 11\nLine 12\nLine 13\nLine 14"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:textColor="@color/text_color" />
+
+    </ScrollView>
 
 </LinearLayout>

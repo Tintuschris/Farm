@@ -1,9 +1,13 @@
 package com.example.farm;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,6 +27,10 @@ public class WeatherForecastActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_forecast);
 
+        // Set up the toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         forecastTextView = findViewById(R.id.forecast_text_view);
 
         // Get the latitude and longitude passed from HomePageActivity
@@ -31,6 +39,28 @@ public class WeatherForecastActivity extends AppCompatActivity {
 
         // Fetch the weather forecast
         getWeatherForecast(latitude, longitude);
+    }
+
+    // Inflate the menu for the toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_sec, menu);
+        return true;
+    }
+
+    // Handle toolbar item clicks
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.back_button) {
+            // Navigate back to the homepage
+            Intent intent = new Intent(this, HomePageActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     // Method to get 5-Day / 3-Hour forecast using OpenWeatherMap API
@@ -53,17 +83,19 @@ public class WeatherForecastActivity extends AppCompatActivity {
                         JSONObject weather = weatherArray.getJSONObject(0);
                         String description = weather.getString("description");
 
-                        String rainInfo = "No rain forecasted";
+                        // Improved rainfall data handling
+                        double rainVolume = 0;
                         if (forecast.has("rain")) {
                             JSONObject rain = forecast.getJSONObject("rain");
                             if (rain.has("3h")) {
-                                double rainVolume = rain.getDouble("3h");
-                                rainInfo = "Rainfall (3h): " + rainVolume + " mm";
+                                rainVolume = rain.getDouble("3h");
                             }
                         }
 
+                        String rainInfo = rainVolume > 0 ? String.format("Rainfall (3h): %.2f mm", rainVolume) : "No rain forecasted";
+
                         forecastInfo.append("Time: ").append(dateTime).append("\n")
-                                .append("Temperature: ").append(temp).append("°C\n")
+                                .append("Temperature: ").append(String.format("%.1f°C", temp)).append("\n")
                                 .append("Description: ").append(description).append("\n")
                                 .append(rainInfo).append("\n\n");
                     }

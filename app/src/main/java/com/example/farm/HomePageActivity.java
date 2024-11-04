@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -50,14 +51,13 @@ public class HomePageActivity extends AppCompatActivity {
     private TextView nearestTownTextView;
     private TextView bulkDensityTextView;
     private TextView cropsview;
-    private TextView weatherTextView;
     private PopupWindow popupWindow;
     private Button soil_button;
     private MyDatabaseHelper dbHelper;
     private View popupView;
     private double currentLatitude;
     private double currentLongitude;
-    private static final String API_KEY = "c97a0f9ebbf89a9bdb7c569fc5f2fefd";  // OpenWeatherMap API key
+    private SharedPreferences sharedPreferences;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -73,7 +73,6 @@ public class HomePageActivity extends AppCompatActivity {
         nearestTownTextView = findViewById(R.id.nearest_town_text_view);
         bulkDensityTextView = findViewById(R.id.bulkDensityTextView);
         cropsview = findViewById(R.id.crops);
-        weatherTextView = findViewById(R.id.forecast_text_view);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         popupView = inflater.inflate(R.layout.popup_layout, null);
@@ -98,12 +97,15 @@ public class HomePageActivity extends AppCompatActivity {
                 popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
             }
         });
+
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
     }
 
     // Inflate the toolbar menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);  // Ensure menu_main includes all items
         return true;
     }
 
@@ -112,8 +114,8 @@ public class HomePageActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        // Open Weather Forecast Activity
         if (id == R.id.action_weather_forecast) {
-            // Navigate to the WeatherForecastActivity, passing the latitude and longitude
             Intent intent = new Intent(this, WeatherForecastActivity.class);
             intent.putExtra("latitude", getCurrentLatitude());
             intent.putExtra("longitude", getCurrentLongitude());
@@ -121,7 +123,50 @@ public class HomePageActivity extends AppCompatActivity {
             return true;
         }
 
+        // Logout Action
+        if (id == R.id.action_settings) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you want to logout?")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Call logout() from LoginActivity
+                            LoginActivity.logout(sharedPreferences, HomePageActivity.this);  // Logout and clear session
+                        }
+                    })
+                    .setNegativeButton("Cancel", null);
+            builder.create().show();
+            return true;
+        }
+
+
+        // Open Trees Activity
+        if (id == R.id.action_trees) {
+            Intent intent = new Intent(this, TreesActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        // Open Regions Activity
+        if (id == R.id.action_regions) {
+            Intent intent = new Intent(this, RegionsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    // Method to logout the user and clear session
+    private void logoutUser() {
+        // Clear session data in SharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        // Redirect to LoginActivity
+        Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();  // Close the current activity to prevent the user from going back
     }
 
     // Method to get device location
@@ -139,7 +184,6 @@ public class HomePageActivity extends AppCompatActivity {
                             currentLocationTextView.setText("Lat: " + currentLatitude + " Long: " + currentLongitude);
                             getNearestTown(currentLatitude, currentLongitude); // Fetch nearest town
                             getSoilProperties(currentLatitude, currentLongitude); // Fetch soil properties
-                            getWeatherData(currentLatitude, currentLongitude); // Fetch weather data
                         } else {
                             Toast.makeText(HomePageActivity.this, "Unable to retrieve location", Toast.LENGTH_SHORT).show();
                         }
@@ -160,46 +204,6 @@ public class HomePageActivity extends AppCompatActivity {
     private double getCurrentLongitude() {
         return currentLongitude;
     }
-
-    // Method to get weather data using OpenWeatherMap API
-    private void getWeatherData(double latitude, double longitude) {
-        String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=metric&appid=" + API_KEY;
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONObject main = response.getJSONObject("main");
-                    double temperature = main.getDouble("temp");
-                    int humidity = main.getInt("humidity");
-
-                    JSONArray weatherArray = response.getJSONArray("weather");
-                    JSONObject weather = weatherArray.getJSONObject(0);
-                    String weatherDescription = weather.getString("description");
-
-                    String weatherInfo = "Temperature: " + temperature + "°C\n"
-                            + "Humidity: " + humidity + "%\n"
-                            + "Description: " + weatherDescription;
-                    weatherTextView.setText(weatherInfo);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(HomePageActivity.this, "Error parsing weather data", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(HomePageActivity.this, "Error retrieving weather data", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(jsonObjectRequest);
-    }
-
-    // Method to get nearest town using coordinates
     private void getNearestTown(double latitude, double longitude) {
         String url = "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + latitude + "&lon=" + longitude;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -207,18 +211,34 @@ public class HomePageActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     JSONObject address = response.getJSONObject("address");
-                    String location = address.has("town") ? address.getString("town") : "Unknown location";
-                    nearestTownTextView.setText("Nearest Town: " + location);
+                    String location = "Unknown location";
+
+                    // Check for various location types in order of specificity
+                    String[] locationTypes = {"city", "town", "village", "hamlet", "suburb", "neighbourhood", "county", "state", "country"};
+
+                    for (String type : locationTypes) {
+                        if (address.has(type)) {
+                            location = address.getString(type);
+                            break;
+                        }
+                    }
+
+                    // If no match found, use display_name as a fallback
+                    if (location.equals("Unknown location") && response.has("display_name")) {
+                        location = response.getString("display_name");
+                    }
+
+                    nearestTownTextView.setText("Current Location: " + location);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(HomePageActivity.this, "Unable to retrieve nearest location", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomePageActivity.this, "Unable to retrieve current location", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(HomePageActivity.this, "Error retrieving nearest location", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomePageActivity.this, "Error retrieving current location", Toast.LENGTH_SHORT).show();
             }
         });
         RequestQueue queue = Volley.newRequestQueue(this);

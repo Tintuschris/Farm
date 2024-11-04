@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="09732d18-1394-4a55-96fc-bc7c6a83f95f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../java/com/example/farm/HomePageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/example/farm/HomePageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/example/farm/SplashActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/example/farm/SplashActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/example/farm/WeatherForecastActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/example/farm/WeatherForecastActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_weather_forecast.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_weather_forecast.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../menu/menu_sec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../menu/menu_sec.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2n48tR3eL464GlyrULUzfCo00sf" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/projects/Farm/app/src/main/res/drawable"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="09732d18-1394-4a55-96fc-bc7c6a83f95f" name="Changes" comment="" />
+      <created>1728221202452</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1728221202452</updated>
+    </task>
+    <servers />
+  </component>
+</project>

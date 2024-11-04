@@ -6,6 +6,4 @@
         android:icon="@drawable/ic_back"
         android:title="Trees"
         app:showAsAction="always" />
-
-
 </menu>
